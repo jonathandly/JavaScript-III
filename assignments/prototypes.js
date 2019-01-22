@@ -71,6 +71,26 @@ Humanoid.prototype.greet = function() {
   return `${this.name} offers a greeting in ${this.language}`;
 }
 
+function Villain(villainAttrs) {
+  Humanoid.call(this, villainAttrs);
+}
+Villain.prototype = Object.create(Humanoid.prototype);
+
+Villain.prototype.fire = function() {
+  console.log(`Hero takes fire damage!!`);
+  return hero.healthPoints - 1;
+}
+
+function Hero(heroAttrs) {
+  Humanoid.call(this, heroAttrs);
+}
+Hero.prototype = Object.create(Humanoid.prototype);
+
+Hero.prototype.slash = function() {
+  console.log(`Villain is slashed!!`);
+  return villain.healthPoints - 1;
+}
+
 const mage = new Humanoid({
   createdAt: new Date(),
   dimensions: {
