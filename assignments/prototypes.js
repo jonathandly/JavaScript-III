@@ -75,21 +75,64 @@ function Villain(villainAttrs) {
   Humanoid.call(this, villainAttrs);
 }
 Villain.prototype = Object.create(Humanoid.prototype);
-
+Villain.prototype.death = function() {
+  console.log(`${demon.name} has been vanquished!!`);
+}
 Villain.prototype.fire = function() {
-  console.log(`Hero takes fire damage!!`);
-  return hero.healthPoints - 1;
+  if(knight.healthPoints <= 1) {
+    return knight.death();
+  } else {
+    return console.log(`Knight takes fire damage and loses 10 HP. HP-REMAINING: ${knight.healthPoints - 10}`);
+  }
 }
 
 function Hero(heroAttrs) {
   Humanoid.call(this, heroAttrs);
 }
 Hero.prototype = Object.create(Humanoid.prototype);
+Hero.prototype.death = function() {
+  console.log(`${knight.name} has been slain!!`);
+
+}
 
 Hero.prototype.slash = function() {
-  console.log(`Villain is slashed!!`);
-  return villain.healthPoints - 1;
+  if(demon.healthPoints <= 1) {
+      return demon.death();
+   } else {
+      return console.log(`Demon is slashed and loses 10 HP.  HP-REMAINING: ${demon.healthPoints - 10}`);
+  }
 }
+    
+
+const knight = new Hero({
+  createdAt: new Date(),
+  dimensions: {
+    length: 4,
+    width: 2,
+    height: 2,
+  },
+  healthPoints: 10,
+  name: 'Knight',
+  weapons: [
+    'Mace',
+  ],
+  language: 'Hero Talk'
+});
+
+const demon = new Villain({
+  createdAt: new Date(),
+  dimension: {
+    length: 3,
+    width: 3,
+    height: 3,
+  },
+  healthPoints: 11,
+  name: 'Demon',
+  weapons: [
+    'fireball',
+  ],
+  language: 'unknown dialect'
+});
 
 const mage = new Humanoid({
   createdAt: new Date(),
@@ -141,17 +184,24 @@ const archer = new Humanoid({
   language: 'Elvish',
 });
 
-console.log(mage.createdAt); // Today's date
-console.log(archer.dimensions); // { length: 1, width: 2, height: 4 }
-console.log(swordsman.healthPoints); // 15
-console.log(mage.name); // Bruce
-console.log(swordsman.team); // The Round Table
-console.log(mage.weapons); // Staff of Shamalama
-console.log(archer.language); // Elvish
-console.log(archer.greet()); // Lilith offers a greeting in Elvish.
-console.log(mage.takeDamage()); // Bruce took damage.
-console.log(swordsman.destroy()); // Sir Mustachio was removed from the game.
-console.log(mage);
+
+// console.log(knight.slash());
+//console.log(demon.fire());
+
+
+console.log(knight.slash());
+console.log(demon.fire());
+// console.log(mage.createdAt); // Today's date
+// console.log(archer.dimensions); // { length: 1, width: 2, height: 4 }
+// console.log(swordsman.healthPoints); // 15
+// console.log(mage.name); // Bruce
+// console.log(swordsman.team); // The Round Table
+// console.log(mage.weapons); // Staff of Shamalama
+// console.log(archer.language); // Elvish
+// console.log(archer.greet()); // Lilith offers a greeting in Elvish.
+// console.log(mage.takeDamage()); // Bruce took damage.
+// console.log(swordsman.destroy()); // Sir Mustachio was removed from the game.
+// console.log(mage);
 
   // Stretch task: 
   // * Create Villain and Hero constructor functions that inherit from the Humanoid constructor function.  
