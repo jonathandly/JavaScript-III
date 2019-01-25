@@ -76,13 +76,14 @@ function Villain(villainAttrs) {
 }
 Villain.prototype = Object.create(Humanoid.prototype);
 Villain.prototype.death = function() {
-  console.log(`${demon.name} has been vanquished!!`);
+  console.log(`${this.name} has been vanquished!!`);
 }
 Villain.prototype.fire = function() {
-  if(knight.healthPoints <= 1) {
-    return knight.death();
+  knight.healthPoints -= 2;
+  if(knight.healthPoints > 0) {
+    return `${knight.name} takes fire damage and loses 2HP. HP-REMAINING: ${knight.healthPoints}`;
   } else {
-    return console.log(`Knight takes fire damage and loses 10 HP. HP-REMAINING: ${knight.healthPoints - 10}`);
+    return demon.death();
   }
 }
 
@@ -91,15 +92,16 @@ function Hero(heroAttrs) {
 }
 Hero.prototype = Object.create(Humanoid.prototype);
 Hero.prototype.death = function() {
-  console.log(`${knight.name} has been slain!!`);
+  console.log(`${this.name} has been slain!!`);
 
 }
 
 Hero.prototype.slash = function() {
-  if(demon.healthPoints <= 1) {
-      return demon.death();
+  if(demon.healthPoints > 0) {
+      demon.healthPoints -= 2;
+      return `${demon.name} is slashed and loses 2HP. HP-REMAINING: ${demon.healthPoints}`;
    } else {
-      return console.log(`Demon is slashed and loses 10 HP.  HP-REMAINING: ${demon.healthPoints - 10}`);
+      return knight.death();
   }
 }
     
@@ -126,7 +128,7 @@ const demon = new Villain({
     width: 3,
     height: 3,
   },
-  healthPoints: 11,
+  healthPoints: 10,
   name: 'Demon',
   weapons: [
     'fireball',
@@ -189,6 +191,15 @@ const archer = new Humanoid({
 //console.log(demon.fire());
 
 
+console.log(knight.slash());
+console.log(demon.fire());
+console.log(knight.slash());
+console.log(demon.fire());
+console.log(knight.slash());
+console.log(demon.fire());
+console.log(knight.slash());
+console.log(demon.fire());
+console.log(knight.slash());
 console.log(knight.slash());
 console.log(demon.fire());
 // console.log(mage.createdAt); // Today's date
